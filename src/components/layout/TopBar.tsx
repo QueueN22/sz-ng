@@ -1,0 +1,142 @@
+import { useState } from 'react';
+import { Bell, ChevronDown, LogOut, Settings, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { currentStudent, semesters } from '@/data/mockData';
+import { SidebarTrigger } from './Sidebar';
+import { Link } from 'react-router-dom';
+
+interface TopBarProps {
+  onMenuClick: () => void;
+}
+
+export function TopBar({ onMenuClick }: TopBarProps) {
+  const [selectedSemester, setSelectedSemester] = useState(semesters[0].id);
+
+  return (
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 lg:px-6">
+      <div className="flex items-center gap-4">
+        <SidebarTrigger onClick={onMenuClick} />
+        
+        {/* Semester Selector */}
+        <Select value={selectedSemester} onValueChange={setSelectedSemester}>
+          <SelectTrigger className="w-[200px] border-border bg-secondary/50">
+            <SelectValue placeholder="Select semester" />
+          </SelectTrigger>
+          <SelectContent>
+            {semesters.map((semester) => (
+              <SelectItem key={semester.id} value={semester.id}>
+                <span className="flex items-center gap-2">
+                  {semester.name} {semester.year}
+                  {semester.isCurrent && (
+                    <Badge variant="success" className="text-[10px] px-1.5 py-0">
+                      Current
+                    </Badge>
+                  )}
+                </span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="flex items-center gap-3">
+        {/* Notifications */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground">
+                3
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80">
+            <div className="p-3 border-b border-border">
+              <h4 className="font-semibold text-foreground">Notifications</h4>
+            </div>
+            <div className="max-h-[300px] overflow-y-auto">
+              <DropdownMenuItem className="flex flex-col items-start gap-1 p-3 cursor-pointer">
+                <span className="font-medium text-sm">Assignment Deadline</span>
+                <span className="text-xs text-muted-foreground">CSC 301 assignment due in 2 days</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex flex-col items-start gap-1 p-3 cursor-pointer">
+                <span className="font-medium text-sm">New Announcement</span>
+                <span className="text-xs text-muted-foreground">Mid-semester exam schedule released</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex flex-col items-start gap-1 p-3 cursor-pointer">
+                <span className="font-medium text-sm">Grade Posted</span>
+                <span className="text-xs text-muted-foreground">Your CSC 303 test result is available</span>
+              </DropdownMenuItem>
+            </div>
+            <div className="p-2 border-t border-border">
+              <Button variant="ghost" size="sm" className="w-full">
+                View all notifications
+              </Button>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* User Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="flex items-center gap-2 px-2">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={currentStudent.avatar} />
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                  {currentStudent.firstName[0]}{currentStudent.lastName[0]}
+                </AvatarFallback>
+              </Avatar>
+              <div className="hidden flex-col items-start md:flex">
+                <span className="text-sm font-medium text-foreground">
+                  {currentStudent.firstName} {currentStudent.lastName}
+                </span>
+                <span className="text-xs text-muted-foreground">{currentStudent.level}</span>
+              </div>
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="p-2">
+              <p className="text-sm font-medium">{currentStudent.firstName} {currentStudent.lastName}</p>
+              <p className="text-xs text-muted-foreground">{currentStudent.email}</p>
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to="/student/profile" className="flex items-center cursor-pointer">
+                <User className="mr-2 h-4 w-4" />
+                Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to="/" className="flex items-center cursor-pointer text-destructive">
+                <LogOut className="mr-2 h-4 w-4" />
+                Switch to Staff
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </header>
+  );
+}
