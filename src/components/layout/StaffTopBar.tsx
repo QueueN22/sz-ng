@@ -125,7 +125,7 @@ export function StaffTopBar({ onMenuClick }: StaffTopBarProps) {
             <DropdownMenuItem asChild>
               <Link to="/" className="flex items-center cursor-pointer text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
-                Switch to Student
+                Logout
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
