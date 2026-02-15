@@ -20,6 +20,10 @@ import StaffAttendancePage from "@/pages/staff/StaffAttendancePage";
 import StaffResultsPage from "@/pages/staff/StaffResultsPage";
 import StaffAnnouncementsPage from "@/pages/staff/StaffAnnouncementsPage";
 import StaffProfilePage from "@/pages/staff/StaffProfilePage";
+import { AdminLayout } from "@/components/layout/AdminLayout";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import UserManagementPage from "@/pages/admin/UserManagementPage";
+import AdminCourseManagement from "@/pages/admin/AdminCourseManagement";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +58,13 @@ const App = () => (
             <Route path="results" element={<StaffResultsPage />} />
             <Route path="announcements" element={<StaffAnnouncementsPage />} />
             <Route path="profile" element={<StaffProfilePage />} />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<UserManagementPage />} />
+            <Route path="courses" element={<AdminCourseManagement />} />
           </Route>
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

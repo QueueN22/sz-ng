@@ -44,7 +44,7 @@ export default function RoleSelectPage() {
                 <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-accent/10 mb-5 group-hover:bg-accent/20 transition-colors">
                   <Briefcase className="h-10 w-10 text-accent" />
                 </div>
-                <h2 className="text-xl font-bold text-foreground mb-2">Staff / Lecturer</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Staff</h2>
                 <p className="text-sm text-muted-foreground mb-4">
                   Manage courses, attendance, results, and announcements
                 </p>
@@ -54,8 +54,27 @@ export default function RoleSelectPage() {
               </CardContent>
             </Card>
           </Link>
+
+          {/*<Link to="/admin">
+            <Card variant="interactive" className="h-full group">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 mb-5 group-hover:bg-primary/20 transition-colors">
+                  <ShieldCheck className="h-10 w-10 text-primary" />
+                </div>
+                <h2 className="text-xl font-bold text-foreground mb-2">Administrator</h2>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Manage users, courses, system settings, and audit logs
+                </p>
+                <div className="flex items-center gap-1 text-primary font-medium text-sm">
+                  Continue <ArrowRight className="h-4 w-4" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>*/}
         </div>
       </div>
     </div>
   );
 }
+
+import { ShieldCheck } from 'lucide-react';
